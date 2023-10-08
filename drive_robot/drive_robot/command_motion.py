@@ -46,9 +46,15 @@ class SendCommands(Node):
             msg.angular.x = cmd['angular']['x']
             msg.angular.y = cmd['angular']['y']
             msg.angular.z = cmd['angular']['z']
-            
 
-            self.cmd_vel_pub_.publish(msg)       
+
+            if msg.linear.x == 0.0 and msg.angular.z == 0.0:
+                self.get_logger().info("Stopping the robot")
+                self.cmd_vel_pub_.publish(msg)  
+                self.timer_.cancel()  
+                return       
+
+            self.cmd_vel_pub_.publish(msg)     
 
 
 def main(args=None):
