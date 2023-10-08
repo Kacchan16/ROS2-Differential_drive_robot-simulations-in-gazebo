@@ -52,7 +52,10 @@ class SendCommands(Node):
                 self.get_logger().info("Stopping the robot")
                 self.cmd_vel_pub_.publish(msg)  
                 self.timer_.cancel()  
-                return       
+                
+                raise Exception(f'End of positions!')  
+                return  
+                 
 
             self.cmd_vel_pub_.publish(msg)     
 
